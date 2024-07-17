@@ -9,6 +9,7 @@ async function fetchExchangeRate() {
         }
         const data = await response.json();
         exchangeRate = data.rates.JPY;
+        document.getElementById('jpyExchangeRate').textContent = `${exchangeRate.toFixed(2)} ¥`;
         console.log(`Fetched exchange rate: ${exchangeRate}`);
     } catch (error) {
         console.error('Error fetching exchange rate:', error);
