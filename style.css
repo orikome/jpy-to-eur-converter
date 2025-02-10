@@ -59,6 +59,17 @@ h1 {
     align-items: center;
     gap: 10px;
     position: relative;
+    width: 240px;
+}
+
+.currency-input img {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    pointer-events: none;
 }
 
 .currency-symbol {
@@ -73,8 +84,9 @@ input[type="number"] {
     color: var(--theme-text);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 12px;
-    padding: 12px 12px 12px 30px;
-    width: 200px;
+    padding: 12px 40px 12px 30px;
+    width: 100%;
+    box-sizing: border-box;
     font-size: 16px;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     -moz-appearance: textfield;
