@@ -11,7 +11,7 @@
 }
 
 body {
-    font-family: 'Inter', Arial, sans-serif;
+    font-family: 'Comfortaa', Arial, sans-serif;
     color: var(--theme-text);
     background-color: var(--theme-bg);
     min-height: 100vh;
@@ -43,8 +43,9 @@ h1 {
     color: transparent;
     letter-spacing: 0.04em;
     animation: headerAnimation 12s ease infinite;
-    font-weight: 600;
+    font-weight: 1200;
     margin-bottom: 2rem;
+    user-select: none;
 }
 
 .converter-box {
@@ -90,7 +91,8 @@ h1 {
     color: var(--theme-text);
 }
 
-input[type="number"] {
+input[type="number"], 
+input[type="text"] {
     background: rgba(255, 255, 255, 0.08);
     color: var(--theme-text);
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -99,11 +101,13 @@ input[type="number"] {
     width: 100%;
     box-sizing: border-box;
     font-size: 16px;
+    font-family: 'Comfortaa', Arial, sans-serif;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     -moz-appearance: textfield;
 }
 
-input[type="number"]:hover {
+input[type="number"]:hover,
+input[type="text"]:hover {
     border-color: var(--theme-accent);
 }
 
@@ -115,6 +119,50 @@ input[type="number"]::-webkit-inner-spin-button {
 
 input[type="number"] {
     -moz-appearance: textfield;
+}
+
+input::placeholder {
+    font-family: 'Comfortaa', Arial, sans-serif;
+    color: var(--theme-secondary);
+    opacity: 0.7;
+}
+
+input::-webkit-input-placeholder {
+    font-family: 'Comfortaa', Arial, sans-serif;
+}
+
+input::-moz-placeholder {
+    font-family: 'Comfortaa', Arial, sans-serif;
+}
+
+input:-ms-input-placeholder {
+    font-family: 'Comfortaa', Arial, sans-serif;
+}
+
+input:-moz-placeholder {
+    font-family: 'Comfortaa', Arial, sans-serif;
+}
+
+input[type="text"]::placeholder {
+    font-family: 'Comfortaa', Arial, sans-serif;
+    color: var(--theme-secondary);
+    opacity: 0.7;
+}
+
+input[type="text"]::-webkit-input-placeholder {
+    font-family: 'Comfortaa', Arial, sans-serif;
+}
+
+input[type="text"]::-moz-placeholder {
+    font-family: 'Comfortaa', Arial, sans-serif;
+}
+
+input[type="text"]:-ms-input-placeholder {
+    font-family: 'Comfortaa', Arial, sans-serif;
+}
+
+input[type="text"]:-moz-placeholder {
+    font-family: 'Comfortaa', Arial, sans-serif;
 }
 
 .exchange-rate {

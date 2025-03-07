@@ -1,4 +1,5 @@
 let exchangeRate = 172;
+let jpyActualValue = '';
 
 async function fetchExchangeRate() {
     const url = 'https://api.frankfurter.app/latest?from=EUR&to=JPY';
@@ -16,19 +17,62 @@ async function fetchExchangeRate() {
     }
 }
 
-document.getElementById("jpyInput").addEventListener("input", convertJPYtoEUR);
+document.getElementById("jpyInput").addEventListener("input", handleJpyInput);
+document.getElementById("jpyInput").addEventListener("focus", handleJpyFocus);
+document.getElementById("jpyInput").addEventListener("blur", handleJpyBlur);
 document.getElementById("eurInput").addEventListener("input", convertEURtoJPY);
 
+function formatJapaneseNumber(num) {
+    if (num >= 10000) {
+        return (num / 10000).toFixed(2) + '万';
+    }
+    return num.toString();
+}
+
+function handleJpyInput(e) {
+    // Make sure we only accept numbers
+    const value = e.target.value.replace(/[^0-9.]/g, '');
+    jpyActualValue = value;
+    convertJPYtoEUR();
+}
+
+function handleJpyFocus(e) {
+    // Show raw value when focused
+    if (jpyActualValue) {
+        e.target.value = jpyActualValue;
+    }
+}
+
+function handleJpyBlur(e) {
+    // Format with Japanese notation when not focused
+    if (jpyActualValue && parseFloat(jpyActualValue) >= 10000) {
+        e.target.value = formatJapaneseNumber(parseFloat(jpyActualValue));
+    }
+}
+
 function convertJPYtoEUR() {
-    const jpy = document.getElementById("jpyInput").value;
+    const jpy = jpyActualValue;
     const eurInput = document.getElementById("eurInput");
     eurInput.value = jpy ? (jpy / exchangeRate).toFixed(2) : '';
+    
+    // Format with Japanese notation when not focused
+    const jpyInput = document.getElementById("jpyInput");
+    if (jpy && parseFloat(jpy) >= 10000 && document.activeElement !== jpyInput) {
+        jpyInput.value = formatJapaneseNumber(parseFloat(jpy));
+    }
 }
 
 function convertEURtoJPY() {
     const eur = document.getElementById("eurInput").value;
     const jpyInput = document.getElementById("jpyInput");
-    jpyInput.value = eur ? (eur * exchangeRate).toFixed(2) : '';
+    jpyActualValue = eur ? (eur * exchangeRate).toFixed(2) : '';
+    
+    // Format with Japanese notation when not focused
+    if (jpyActualValue && parseFloat(jpyActualValue) >= 10000 && document.activeElement !== jpyInput) {
+        jpyInput.value = formatJapaneseNumber(parseFloat(jpyActualValue));
+    } else {
+        jpyInput.value = jpyActualValue;
+    }
 }
 
 fetchExchangeRate();
