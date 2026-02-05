@@ -20,7 +20,9 @@ async function fetchExchangeRate() {
 document.getElementById("jpyInput").addEventListener("input", handleJpyInput);
 document.getElementById("jpyInput").addEventListener("focus", handleJpyFocus);
 document.getElementById("jpyInput").addEventListener("blur", handleJpyBlur);
-document.getElementById("eurInput").addEventListener("input", convertEURtoJPY);
+document.getElementById("eurInput").addEventListener("input", handleEurInput);
+document.getElementById("eurInput").addEventListener("focus", handleEurFocus);
+document.getElementById("eurInput").addEventListener("blur", handleEurBlur);
 
 function formatJapaneseNumber(num) {
     if (num >= 100000000) {
@@ -32,6 +34,15 @@ function formatJapaneseNumber(num) {
         return (num / 10000).toFixed(2) + '万';
     }
     return num.toString();
+}
+
+function formatEuroNumber(num) {
+    // Format with thousand separators, only show decimals if needed
+    const hasDecimals = num % 1 !== 0;
+    return num.toLocaleString('en-US', {
+        minimumFractionDigits: hasDecimals ? 2 : 0,
+        maximumFractionDigits: 2
+    });
 }
 
 function handleJpyInput(e) {
@@ -58,25 +69,58 @@ function handleJpyBlur(e) {
 function convertJPYtoEUR() {
     const jpy = jpyActualValue;
     const eurInput = document.getElementById("eurInput");
-    eurInput.value = jpy ? (jpy / exchangeRate).toFixed(2) : '';
+    eurActualValue = jpy ? (jpy / exchangeRate).toFixed(2) : '';
     
-    // Format with Japanese notation when not focused
+    // Format EUR with thousand separators when not focused
+    if (eurActualValue && parseFloat(eurActualValue) >= 1000 && document.activeElement !== eurInput) {
+        eurInput.value = formatEuroNumber(parseFloat(eurActualValue));
+    } else {
+        eurInput.value = eurActualValue;
+    }
+    
+    // Format JPY with Japanese notation when not focused
     const jpyInput = document.getElementById("jpyInput");
     if (jpy && parseFloat(jpy) >= 10000 && document.activeElement !== jpyInput) {
         jpyInput.value = formatJapaneseNumber(parseFloat(jpy));
     }
 }
 
+let eurActualValue = '';
+
+function handleEurInput(e) {
+    const value = e.target.value.replace(/[^0-9.]/g, '');
+    eurActualValue = value;
+    convertEURtoJPY();
+}
+
+function handleEurFocus(e) {
+    if (eurActualValue) {
+        e.target.value = eurActualValue;
+    }
+}
+
+function handleEurBlur(e) {
+    if (eurActualValue && parseFloat(eurActualValue) >= 1000) {
+        e.target.value = formatEuroNumber(parseFloat(eurActualValue));
+    }
+}
+
 function convertEURtoJPY() {
-    const eur = document.getElementById("eurInput").value;
+    const eur = eurActualValue;
     const jpyInput = document.getElementById("jpyInput");
+    const eurInput = document.getElementById("eurInput");
     jpyActualValue = eur ? (eur * exchangeRate).toFixed(2) : '';
     
-    // Format with Japanese notation when not focused
+    // Format JPY with Japanese notation when not focused
     if (jpyActualValue && parseFloat(jpyActualValue) >= 10000 && document.activeElement !== jpyInput) {
         jpyInput.value = formatJapaneseNumber(parseFloat(jpyActualValue));
     } else {
         jpyInput.value = jpyActualValue;
+    }
+    
+    // Format EUR when not focused
+    if (eur && parseFloat(eur) >= 1000 && document.activeElement !== eurInput) {
+        eurInput.value = formatEuroNumber(parseFloat(eur));
     }
 }
 
