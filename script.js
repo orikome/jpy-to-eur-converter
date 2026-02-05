@@ -23,6 +23,11 @@ document.getElementById("jpyInput").addEventListener("blur", handleJpyBlur);
 document.getElementById("eurInput").addEventListener("input", convertEURtoJPY);
 
 function formatJapaneseNumber(num) {
+    if (num >= 100000000) {
+        const oku = Math.floor(num / 100000000);
+        const man = Math.floor((num % 100000000) / 10000);
+        return man > 0 ? `${oku}億${man}万` : `${oku}億`;
+    }
     if (num >= 10000) {
         return (num / 10000).toFixed(2) + '万';
     }
