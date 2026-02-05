@@ -1,19 +1,19 @@
 :root {
-    --theme-bg: linear-gradient(135deg, #282A36, #28212c, #241f1a);
-    --theme-wave1: #1e2030;
-    --theme-wave2: #222436;
-    --theme-card: #2b2b2e;
-    --theme-accent: #3a71a8;
-    --theme-text: #ccc;
-    --theme-secondary: #86868b;
-    --theme-h1: linear-gradient(135deg, #2d88ff, #f29b4a);
-    --theme-link-hover: #2d88ff;
+    --theme-bg: linear-gradient(135deg, #1a1625, #2d2438, #1f1a2e);
+    --theme-wave1: #1a1625;
+    --theme-wave2: #2a2235;
+    --theme-card: #332b40;
+    --theme-accent: #7c5ce0;
+    --theme-text: #f0e6ff;
+    --theme-secondary: #a89ec4;
+    --theme-h1: linear-gradient(135deg, #ff6b9d, #ffa64d, #ffdc5e);
+    --theme-link-hover: #ff6b9d;
 }
 
 body {
     font-family: 'Comfortaa', Arial, sans-serif;
     color: var(--theme-text);
-    background-color: var(--theme-bg);
+    background: var(--theme-bg);
     min-height: 100vh;
     margin: 0;
     display: flex;
@@ -35,35 +35,51 @@ body {
 }
 
 h1 {
-    font-size: 3.5rem;
+    font-size: 3rem;
     background: var(--theme-h1);
     background-size: 200% 200%;
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
     letter-spacing: 0.04em;
-    animation: headerAnimation 12s ease infinite;
-    font-weight: 1200;
+    animation: headerAnimation 10s ease infinite;
+    font-weight: 700;
+    margin: 0;
+    user-select: none;
+}
+
+.title-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     margin-bottom: 2rem;
+}
+
+.subtitle {
+    font-size: 0.9rem;
+    color: var(--theme-secondary);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-top: 4px;
     user-select: none;
 }
 
 .converter-box {
     background-color: var(--theme-card);
-    backdrop-filter: blur(20px);
+    backdrop-filter: blur(16px);
     border-radius: 20px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-    padding: 30px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+    padding: 32px;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    transition: border-color 0.3s ease;
 }
 
 .converter-box:hover {
-    border-color: var(--theme-accent);
+    border-color: rgba(255, 255, 255, 0.2);
 }
 
 .currency-input {
@@ -93,21 +109,27 @@ h1 {
 
 input[type="number"], 
 input[type="text"] {
-    background: rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.1);
     color: var(--theme-text);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 12px;
     padding: 12px 40px 12px 30px;
     width: 100%;
     box-sizing: border-box;
     font-size: 16px;
     font-family: 'Comfortaa', Arial, sans-serif;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: border-color 0.3s ease;
     -moz-appearance: textfield;
 }
 
 input[type="number"]:hover,
 input[type="text"]:hover {
+    border-color: var(--theme-accent);
+}
+
+input[type="number"]:focus,
+input[type="text"]:focus {
+    outline: none;
     border-color: var(--theme-accent);
 }
 
@@ -166,7 +188,7 @@ input[type="text"]:-moz-placeholder {
 }
 
 .exchange-rate {
-    font-size: 18px;
+    font-size: 16px;
     color: var(--theme-secondary);
     display: flex;
     align-items: center;
